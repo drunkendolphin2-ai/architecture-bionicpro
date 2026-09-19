@@ -10,7 +10,7 @@ services:
     volumes:
       - ./postgres-keycloak-data:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "5432:5432"
   keycloak:
     image: quay.io/keycloak/keycloak:21.1
     environment:
