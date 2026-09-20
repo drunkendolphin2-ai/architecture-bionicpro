@@ -61,7 +61,7 @@ def report_mart_etl():
         pg = PostgresHook(postgres_conn_id="crm_db")
         records = pg.get_records(
             """
-            SELECT keycloak_user_id::text,
+            SELECT username,
                    full_name,
                    city,
                    model,

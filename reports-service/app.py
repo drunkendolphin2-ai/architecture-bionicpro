@@ -67,8 +67,10 @@ def current_user(creds: HTTPAuthorizationCredentials = Depends(bearer)) -> dict:
     )
     if REQUIRED_ROLE not in roles:
         raise HTTPException(status_code=403, detail="role required")
-
-    return {"user_id": claims["sub"], "username": claims.get("preferred_username")}
+    username = claims.get("preferred_username")
+    if not username:
+        raise HTTPException(status_code=401, detail="no preferred_username claim")
+    return {"user_id": username, "username": username}
 
 
 # --- данные ---------------------------------------------------------------

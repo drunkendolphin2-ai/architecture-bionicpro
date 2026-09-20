@@ -57,13 +57,10 @@ CREATE TABLE IF NOT EXISTS bionic.etl_watermark
     ORDER BY mart_name;
 
 -- Тестовая телеметрия: 3 пользователя, около 10 дней истории.
--- user_id должны совпадать с sub пользователей в Keycloak.
 INSERT INTO bionic.telemetry
 (user_id, prosthesis_id, event_time, gesture, response_ms, signal_quality, battery_pct, error_code)
 SELECT
-    ['11111111-1111-1111-1111-111111111111',
-    '22222222-2222-2222-2222-222222222222',
-    '33333333-3333-3333-3333-333333333333'][(number % 3) + 1],
+    ['prothetic1', 'prothetic2', 'prothetic3'][(number % 3) + 1],
     concat('PR-', toString((number % 3) + 1)),
     now() - toIntervalSecond(number * 7),
     ['grip', 'pinch', 'open', 'rotate'][(number % 4) + 1],
