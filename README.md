@@ -67,8 +67,7 @@ docker compose exec crm_db psql -U crm_user -d crm_db -c "SELECT keycloak_user_i
 Откройте http://localhost:8081 (`admin` / `admin`).
 
 DAG `bionicpro_report_mart` запускается по расписанию и при первом старте
-догоняет историю за 10 дней. Дождитесь, пока запуски станут зелёными
-(1–2 минуты). Если DAG на паузе — включите переключателем слева.
+догоняет историю за 10 дней.
 
 ```bash
 docker compose exec clickhouse clickhouse-client -u bionic --password bionic -q "
