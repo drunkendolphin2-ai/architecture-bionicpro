@@ -10,7 +10,7 @@ services:
     volumes:
       - ./postgres-keycloak-data:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "5432:5432"
   keycloak:
     image: quay.io/keycloak/keycloak:21.1
     environment:
@@ -40,3 +40,21 @@ services:
       REACT_APP_KEYCLOAK_URL: http://localhost:8080
       REACT_APP_KEYCLOAK_REALM: reports-realm
       REACT_APP_KEYCLOAK_CLIENT_ID: reports-frontend
+  reports-api:
+    build:
+      context: ./reports-service
+    environment:
+      KEYCLOAK_JWKS_URL: http://keycloak:8080/realms/reports-realm/protocol/openid-connect/certs
+      KEYCLOAK_ISSUER: http://localhost:8080/realms/reports-realm
+      KEYCLOAK_CLIENT_ID: reports-frontend
+      REQUIRED_ROLE: prothetic_user
+      CORS_ORIGINS: http://localhost:3000
+      CLICKHOUSE_HOST: clickhouse
+      CLICKHOUSE_PORT: "9000"
+      CLICKHOUSE_DB: bionic
+      CLICKHOUSE_USER: bionic
+      CLICKHOUSE_PASSWORD: bionic
+    ports:
+      - "8000:8000"
+    depends_on:
+      - keycloak
